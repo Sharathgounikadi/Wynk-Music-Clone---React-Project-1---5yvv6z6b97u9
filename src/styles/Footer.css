@@ -1,0 +1,40 @@
+.footer {
+  padding: 70px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.Footer-header {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.footer-section {
+  flex-basis: calc(33.33% - 20px);
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.footer h2 {
+  color: white;
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.footer p {
+  font-size: 15px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS';
+  margin: 0px;
+  color: rgb(231, 230, 255);
+}
+
+.footer-description {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.5;
+}

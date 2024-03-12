@@ -1,9 +1,9 @@
-import React from "react";
-import "../styles/Footer.css";
-import Logo from "../assets/images/logo.png";
-import PS from "../assets/images/ps.jpg"
-import AS from "../assets/images/as.jpg"
-
+import React, { useState, useEffect }from "react";
+import "./Footer.css";
+import Logo from "../../assets/images/logo.png";
+import PS from "../../assets/images/ps.jpg"
+import AS from "../../assets/images/as.jpg"
+import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -13,8 +13,17 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
+  const [showFooter, setshowFooter] = useState(true);
+  const location = useLocation();
+    
+  useEffect(()=>{
+      if (location.pathname === "/subscription") {
+        setshowFooter(false)
+      }
+  },[location])
+
   return (
-    <footer className="footer bg-[#0C0F12]">
+    <footer className={`footer bg-[#0C0F12] ${showFooter ? 'flex': 'hidden'}`}>
       <div className="p-6 border border-solid border-gray-300 rounded-lg bg-transparent mb-10 ">
         <div className="font-bold text-lg">
         <h2>About Wynk Music

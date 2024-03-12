@@ -40,8 +40,7 @@ function Header() {
                 </div>
 
                 <div className={`hover:underline underline-offset-[6px] relative ${activeLink !== 'Top Albums' ? 'text-slate-300' : ''}`}>
-                    <div
-                        className="flex items-center"
+                    <div className="flex items-center"
                         onMouseEnter={handleSubMenuToggle}
                         onMouseLeave={handleSubMenuToggle}
                     >

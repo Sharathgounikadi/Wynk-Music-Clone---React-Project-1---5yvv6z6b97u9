@@ -83,14 +83,8 @@ const Subscription = () => {
                                 <img alt='tick-mark' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFySURBVHgBpZTPSwJBFMe/762HoLS1QyC5MHi0Q/4JdusQ2J+Q9A9I0C0w/4LsD4jy0qFLhy7dsg5d8+TVAQ+GBS4KddDdaWZFWENpWT8ww/sx83284TH05eQ6ChCIglItImqNx34t8yFlOEWfTk4hHvXEyK+lXekahwmQiEdlskHPA1vYgZBScBEXosIkydWpEPCC1aj0sqLITNTEiljgI7Ysr6ntSO2tnZSRfnoEp1Jzcf3QJU5L6ep3aiy6uF49Dy5Z2R1s3t9hQ/v+cBisMGZ8yBg9IUTC4044SVpg6+0VfrcLdrImgu/LOn6ubxfVBJstI6Ukhau5Krrq6PQM1m4ek3Ybg4PDpSJB4ZkxEMIee/xOf6Y8kZ8K/QeFnb4QBdJiiAGHnW0pWwp+GTGgRcG+I44JfINVhQIx3SY8fqCIPwMvS5g2PcvfV1ANRICiHDJzZnl0QaCSdu3YQjM6ekSSHoq+4iJB7elPTpip1kv+Ap7AfHBE4do7AAAAAElFTkSuQmCC' />
                                 <p className='period'>Yearly</p>
                                 <p className='price'>
-                                    <span className='original-price'>
-                                        $
-                                        999
-                                    </span>
-                                    <span className='payable-price'>
-                                        $
-                                        399
-                                    </span>
+                                    <span className='original-price'>₹ 999</span>
+                                    <span className='payable-price'>₹ 399</span>
                                 </p>
                                 <p className='discount'>Save 60%</p>
                             </div>
@@ -100,14 +94,8 @@ const Subscription = () => {
                                 <img alt='tick-mark' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFOSURBVHgBpVTLbYNAEJ1dG04cuCCExAEqiEsgFTglJB2kgyQdJBVEriAlxKnAdIAFXLggI3HimzerRIIIKwiehNjfvJl5PFakaRr1fe/RPIRCiLCu6xff98/DDZEkSU8LgOSvbdsy4YXnEhnOtACIe9xut59RFJmKCMwXWo7dZrN5UkRd133RCnBlkCfg1o60EijmTkKwI8az2jMMg2zbJinlaB3t7SWrDsbDVKBpmioIopJlWWqOs+oZgu0jeADlPRyOhptM4DgONU3DGVkLKoqCyrKcykmqxh9zvdG4b8rznDRNIxiQsiy7SsIQvwP2A4JOf12u6zpVVUX/QQwn+F12IDrRAozkd103BNEDLYCYWozj+B7ivtNaIga3idfH3JtBXtvgNvG1bkF0oBkQcw6xz+ClZ7S7x9RcTDQgNEEYoMoAhr0BsadcjavoGwF5k/HfDej/AAAAAElFTkSuQmCC' />
                                 <p className='period'>3 months</p>
                                 <p className='price'>
-                                    <span className='original-price'>
-                                        $
-                                        999
-                                    </span>
-                                    <span className='payable-price'>
-                                        $
-                                        399
-                                    </span>
+                                    <span className='original-price'>₹ 999</span>
+                                    <span className='payable-price'>₹ 399</span>
                                 </p>
                                 <p className='discount'>Save 60%</p>
                             </div>
@@ -120,14 +108,8 @@ const Subscription = () => {
                                 <img alt='tick-mark' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFOSURBVHgBpVTLbYNAEJ1dG04cuCCExAEqiEsgFTglJB2kgyQdJBVEriAlxKnAdIAFXLggI3HimzerRIIIKwiehNjfvJl5PFakaRr1fe/RPIRCiLCu6xff98/DDZEkSU8LgOSvbdsy4YXnEhnOtACIe9xut59RFJmKCMwXWo7dZrN5UkRd133RCnBlkCfg1o60EijmTkKwI8az2jMMg2zbJinlaB3t7SWrDsbDVKBpmioIopJlWWqOs+oZgu0jeADlPRyOhptM4DgONU3DGVkLKoqCyrKcykmqxh9zvdG4b8rznDRNIxiQsiy7SsIQvwP2A4JOf12u6zpVVUX/QQwn+F12IDrRAozkd103BNEDLYCYWozj+B7ivtNaIga3idfH3JtBXtvgNvG1bkF0oBkQcw6xz+ClZ7S7x9RcTDQgNEEYoMoAhr0BsadcjavoGwF5k/HfDej/AAAAAElFTkSuQmCC' />
                                 <p className='period'>Yearly</p>
                                 <p className='price'>
-                                    <span className='original-price'>
-                                        $
-                                        999
-                                    </span>
-                                    <span className='payable-price'>
-                                        $
-                                        399
-                                    </span>
+                                    <span className='original-price'>₹ 999</span>
+                                    <span className='payable-price'>₹ 399</span>
                                 </p>
                                 <p className='discount'>Save 60%</p>
                             </div>

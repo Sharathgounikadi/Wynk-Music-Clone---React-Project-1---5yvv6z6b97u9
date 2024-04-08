@@ -1,91 +1,65 @@
-import React, { useEffect, useRef, useState } from "react";
-// import { useMusic } from "../../utils/MusicProvider";
-import { ReactComponent as PlayIcon } from "../../assets/images/play.svg";
-import { ReactComponent as PauseIcon } from "../../assets/images/pause.svg";
-import { useUser } from "../../utils/UserProvider";
-import { useNavigate } from "react-router-dom";
-import { FaRegHeart, FaHeart } from "react-icons/fa6";
-import { PROJECT_ID } from '../../utils/constant'
+import React, { useState, useEffect } from 'react';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
+import { useUser } from '../../utils/UserProvider';
 
-export const MusicPlayer = ({ data }) => {
-  // const { selectedMusic } = useMusic();
-  const { isUserLoggedIn } = useUser();
-  const audioRef = useRef();
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [start] = useState("0");
-  const [end, setEnd] = useState("0");
-  const navigate = useNavigate();
-  const [addedToWatchlist, setAddedToWatchlist] = useState(false);
+const MusicPlayer = () => {
+  const { currentSong } = useUser();
+  const [progress, setProgress] = useState(0);
 
-  // const { thumbnail, title, artist, audio_url, _id } = selectedMusic;
-  // const artistList = artist && artist.map((item) => item.name).join(" & ");
+  useEffect(() => {
+    if (currentSong) {
+      setProgress(0);
+    }
+  }, [currentSong]);
 
-  // const playPauseAudio = () => {
-  //   setIsPlaying(!isPlaying);
-  // };
+  const handleProgressChange = (e) => {
+    const newProgress = parseFloat(e.target.value);
+    setProgress(newProgress);
+  };
 
-  // const getTime = (duration) => {
-  //   console.log("duration", duration);
-  //   const endTime = Math.ceil(duration);
-  //   let min = Math.floor(endTime / 60);
-  //   let sec = endTime % 60;
-  //   return `${min}:${sec}`;
-  // };
-
-  // useEffect(() => {
-  //   if (audioRef.current) {
-  //     const endTime = getTime(audioRef.current.duration);
-  //     console.log("endTime", endTime);
-  //     setEnd(endTime);
-  //     if (isPlaying) {
-  //       audioRef.current.play();
-  //       console.log("duration", audioRef.current.duration);
-  //     } else {
-  //       audioRef.current.pause();
-  //     }
-  //   }
-  // }, [isPlaying, audioRef]);
-
-  // if (!title) {
-  //   return <></>;
-  // }
-
-  // const addToFavorite = async (songId, token) => {
-  //   const url = `https://academics.newtonschool.co/api/v1/music/favorites/like`;
-  //   return fetch(url, {
-  //     method: "PATCH",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //       projectId: PROJECT_ID,
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ songId }),
-  //   }).then((response) => {
-  //     if (!response.ok) {
-  //       throw new Error("Failed to add to Favourite");
-  //     }
-  //     return response.json();
-  //   });
-  // };
-
-  // const handleAddToFavorite = () => {
-  //   addToFavorite(_id, isUserLoggedIn)
-  //     .then((data) => {
-  //       setAddedToWatchlist(true);
-  //       console.log("Successfully added to Favourite!", data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Failed to add to Favourite:", error);
-  //     });
-  // };
+  const handleListen = (e) => {
+    const { currentTime, duration } = e.target;
+    const newProgress = (currentTime / duration) * 100;
+    setProgress(newProgress);
+  };
 
   return (
-    <section className="absolute bottom-0 h-20 w-full bg-slate-800 px-10 py-2 items-center justify-center gap-5 hidden" id="player">
-    <img src={data.thumbnail} alt='song img' className="h-10 w-10" />
-      <p className="text-white">{data.title}</p>
-      <div>
-      
-      </div>
+    <section className="fixed bottom-0 w-full flex items-center justify-center z-50">
+      {currentSong && (
+        <AudioPlayer
+          src={currentSong.audio_url}
+          autoPlay
+          progress={progress}
+          onListen={handleListen}
+          customProgressBarSection={[
+            <div key="progress-bar" className="w-full">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="0.01"
+                value={progress}
+                className="h-8 absolute left-0 top-0 w-full cursor-pointer"
+                onChange={handleProgressChange}
+              />
+            </div>
+          ]}
+          customAdditionalControls={[
+            <div key={currentSong._id} className="flex items-center text-white">
+              <img src={currentSong.thumbnail} alt={currentSong.title} className="h-12 w-12 rounded-md mr-4" />
+              <div>
+                <div className="text-sm font-semibold truncate">{currentSong.title.split(' ').slice(0, 2).join(' ')}</div>
+                <div className="text-xs text-gray-400">
+                  {currentSong.artist.map((artist) => artist.name).join(', ')}
+                </div>
+              </div>
+            </div>
+          ]}
+        />
+      )}
     </section>
   );
 };
+
+export default MusicPlayer;

@@ -91,7 +91,7 @@ const CarouselMulti = () => {
         prevArrow: <GrNext />,
     };
     return (
-        <div className='my-5 mx-auto w-full'>
+        <div className='my-5 mx-auto w-[95%]'>
             <Slider {...settings}>
                 {smallCarouselData.map((data) => (
                     <div key={data.id} className='h-[250px]  w-[250px] rounded'>

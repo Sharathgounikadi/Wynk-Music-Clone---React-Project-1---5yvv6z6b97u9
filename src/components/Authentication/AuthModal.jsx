@@ -9,9 +9,9 @@ import psImg from '../../assets/images/PlayStore.png';
 import { APP_TYPE, PROJECT_ID, LOGIN_API, SIGNUP_API } from '../../utils/constant';
 import { useUser } from '../../utils/UserProvider';
 const AuthModal = ({ showLogin, handleClose, navigate }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
+    const [getEmail, setEmail] = useState('');
+    const [getPassword, setPassword] = useState('');
+    const [getName, setName] = useState('');
     const [isLogin, setIsLogin] = useState(true);
     const { loginSignupContext } = useUser();
     const handleSubmit = async () => {
@@ -19,8 +19,8 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
             let response;
             if (isLogin) {
                 response = await axios.post(LOGIN_API, {
-                    email: email,
-                    password: password,
+                    getEmail: getEmail,
+                    getPassword: getPassword,
                     appType: APP_TYPE,
                 }, {
                     headers: {
@@ -31,10 +31,10 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
                 toast.success('Login successful!', { autoClose: 2000 });
             } else {
                 response = await axios.post(SIGNUP_API, {
-                    email: email,
-                    password: password,
+                    getEmail: getEmail,
+                    getPassword: getPassword,
                     appType: APP_TYPE,
-                    name: name,
+                    getName: getName,
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
             }
             const token = response.data.token;
             const responseData = response.data.data;
-            const userName = isLogin ? responseData.name : name;
+            const userName = isLogin ? responseData.getName : getName;
             loginSignupContext(userName, token);
             handleClose();
             navigate('/');
@@ -67,9 +67,9 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
                 <div className='lg:col-span-3 p-5 flex flex-col items-center justify-around'>
                     <h1 className='text-white text-3xl w-full'>{isLogin ? 'Login' : 'Sign Up'}</h1>
                     <p className='text-white text-sm lg:text-base'>Get a personalized experience and access all your music</p>
-                    {!isLogin && <input type='text' placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' />}
-                    <input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' />
-                    <input type='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' />
+                    {!isLogin && <input type='text' placeholder='Username' value={getName} onChange={(e) => setName(e.target.value)} className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' />}
+                    <input type='getEmail' placeholder='Email' value={getEmail} onChange={(e) => setEmail(e.target.value)} className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' />
+                    <input type='getPassword' placeholder='Password' value={getPassword} onChange={(e) => setPassword(e.target.value)} className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' />
                     <div className='flex items-center gap-2'>
                         <button className='bg-white h-10 w-24 lg:w-40 rounded-md text-xs lg:text-base' onClick={handleSubmit}>{isLogin ? 'Login' : 'Sign Up'}</button>
                         <button className='bg-white h-10 w-24 lg:w-40 rounded-md text-xs lg:text-base' onClick={() => setIsLogin(!isLogin)}>{isLogin ? 'Sign Up' : 'Login'}</button>

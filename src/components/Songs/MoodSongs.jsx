@@ -11,10 +11,10 @@ import { PROJECT_ID } from '../../utils/constant';
 import { useNavigate } from 'react-router-dom';
 
 const MoodSongs = ({ mood }) => {
-    const [data, setData] = useState([]);
-    const [happy, sethappy] = useState([]);
-    const [sad, setsad] = useState([]);
-    const [excited, setexcited] = useState([]);
+    const [getData, setData] = useState([]);
+    const [getHappy, sethappy] = useState([]);
+    const [getSad, setsad] = useState([]);
+    const [getExcited, setexcited] = useState([]);
     const [romantic, setromantic] = useState([]);
 
     const navigate = useNavigate();
@@ -28,20 +28,20 @@ const MoodSongs = ({ mood }) => {
                         projectId: PROJECT_ID,
                     },
                 });
-                setData(response.data.data);
-                const happyArray = response.data.data.filter(item => item.mood === "happy");
+                setData(response.getData.getData);
+                const happyArray = response.getData.getData.filter(item => item.mood === "getHappy");
                 sethappy(happyArray);
 
-                const sadArray = response.data.data.filter(item => item.mood === "sad");
+                const sadArray = response.getData.getData.filter(item => item.mood === "getSad");
                 setsad(sadArray);
 
-                const excitedArray = response.data.data.filter(item => item.mood === "excited");
+                const excitedArray = response.getData.getData.filter(item => item.mood === "getExcited");
                 setexcited(excitedArray);
 
-                const romanticArray = response.data.data.filter(item => item.mood === "romantic");
+                const romanticArray = response.getData.getData.filter(item => item.mood === "romantic");
                 setromantic(romanticArray);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching getData:', error);
             }
         };
 
@@ -83,17 +83,17 @@ const MoodSongs = ({ mood }) => {
         ],
     };
 
-    const  MusicList = (data) => {
-        if(data === 'happy'){
-            navigate('/playlist/happy', { state: { data: happy } });
-        }if(data === 'sad'){
-            navigate('/playlist/sad', { state: { data: sad } });
+    const  MusicList = (getData) => {
+        if(getData === 'getHappy'){
+            navigate('/playlist/getHappy', { state: { getData: getHappy } });
+        }if(getData === 'getSad'){
+            navigate('/playlist/getSad', { state: { getData: getSad } });
         }
-        if(data === 'excited'){
-            navigate('/playlist/excited', { state: { data: excited } });
+        if(getData === 'getExcited'){
+            navigate('/playlist/getExcited', { state: { getData: getExcited } });
         }
-        if(data === 'romantic'){
-            navigate('/playlist/romantic', { state: { data: romantic } });
+        if(getData === 'romantic'){
+            navigate('/playlist/romantic', { state: { getData: romantic } });
         }
         
     }
@@ -105,12 +105,12 @@ const MoodSongs = ({ mood }) => {
             <div className='h-full w-full pt-4 py-4 rounded-full'>
                 <Slider {...settings}>
                     <div className='bg-red-200 h-[160px] w-[130px] rounded-[40px]' 
-                        onClick={()=>{MusicList('happy') }}>
+                        onClick={()=>{MusicList('getHappy') }}>
                         <img className='rounded-md h-full w-full' src={Happy} alt="Happy Songs" />
                         <h4 className='text-white truncate p-2'>Happy Songs</h4>
                     </div>
                     <div className='bg-red-200 h-[160px] w-[130px] rounded-[40px]'
-                    onClick={() => MusicList('excited')}>
+                    onClick={() => MusicList('getExcited')}>
                         <img className='rounded-md h-full w-full' src={Excited} alt="Excited Songs" />
                         <h4 className='text-white truncate p-2'>Excited Songs</h4>
                     </div>
@@ -120,12 +120,12 @@ const MoodSongs = ({ mood }) => {
                         <h4 className='text-white truncate p-2'>Romantic Songs</h4>
                     </div>
                     <div className='bg-red-200 h-[160px] w-[130px] rounded-[40px]'
-                        onClick={()=>{MusicList('sad')}}>
+                        onClick={()=>{MusicList('getSad')}}>
                         <img className='rounded-md h-full w-full' src={Sad} alt="Sad Songs" />
                         <h4 className='text-white truncate p-2'>Sad Songs</h4>
                     </div>
                     <div className='bg-red-200 h-[160px] w-[130px] rounded-[40px]'
-                        onClick={()=>{MusicList('happy')}}>
+                        onClick={()=>{MusicList('getHappy')}}>
                         <img className='rounded-md h-full w-full' src={Party} alt="Party Songs" />
                         <h4 className='text-white truncate p-2'>Party Songs</h4>
                     </div>

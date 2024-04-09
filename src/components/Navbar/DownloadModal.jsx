@@ -7,7 +7,7 @@ import asImg from "../../assets/images/AppStore.png"
 import psImg from '../../assets/images/PlayStore.png'
 
 const DownloadModal = ({ showDownloadModal, handleClose }) => {
-    const [email, setEmail] = useState('');
+    const [getEmail, setEmail] = useState('');
 
     const handleSubmit = () => {
         try {
@@ -32,7 +32,7 @@ const DownloadModal = ({ showDownloadModal, handleClose }) => {
                     <h1 className='text-white text-5xl w-full '>Take Wynk</h1>
                     <h1 className='text-white text-5xl w-full leading-none'>wherever you go</h1>
                     <p className='text-white text-sm'>Get a message to download the mobile app</p>
-                    <input type='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} className='text-white bg-[#1b1b1c] focus:outline-none px-2 h-10 rounded-md w-full' />
+                    <input type='getEmail' placeholder='Email' value={getEmail} onChange={(e) => setEmail(e.target.value)} className='text-white bg-[#1b1b1c] focus:outline-none px-2 h-10 rounded-md w-full' />
                     <div className='flex items-center gap-2'>
                         <button className='bg-white h-10 w-24 lg:w-40 rounded-md text-xs lg:text-base' onClick={handleSubmit}>Get the Link</button>
                     </div>

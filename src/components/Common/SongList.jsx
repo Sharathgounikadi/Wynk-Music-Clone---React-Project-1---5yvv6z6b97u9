@@ -6,7 +6,7 @@ import MusicPlayer from '../Music/MusicPlayer';
 const SongList = () => {
   const location = useLocation();
   const songsData = location.state?.data || [];
-  const { setCurrentSong, currentSong } = useUser();
+  const {getCurrentSong , setCurrentSong } = useUser();
   const { mood } = useParams();
 
   const handleClickSong = (song) => {
@@ -28,7 +28,7 @@ const SongList = () => {
           </div>
         ))}
       </div>
-      {currentSong && <MusicPlayer />}
+      {getCurrentSong && <MusicPlayer />}
     </div>
   );
 };

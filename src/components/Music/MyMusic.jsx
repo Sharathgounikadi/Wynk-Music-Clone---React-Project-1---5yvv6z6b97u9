@@ -11,7 +11,7 @@ import { useUser } from '../../utils/UserProvider';
 import { useLocation } from 'react-router-dom';
 
 const MyMusic = () => {
-  const [favorites, setFavorites] = useState([]);
+  const [getFavorites, setFavorites] = useState([]);
   const [selectedSong, setSelectedSong] = useState(null);
   const [showheader, setshowheader] = useState(true);
 
@@ -31,7 +31,7 @@ const MyMusic = () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const response = await axios.get('https://academics.newtonschool.co/api/v1/music/favorites/like', {
+          const response = await axios.get('https://academics.newtonschool.co/api/v1/music/getFavorites/like', {
             headers: {
               'Authorization': `Bearer ${token}`,
               'projectId': PROJECT_ID,
@@ -43,7 +43,7 @@ const MyMusic = () => {
           console.error('Token not found in local storage');
         }
       } catch (error) {
-        console.error('Error fetching favorites:', error);
+        console.error('Error fetching getFavorites:', error);
       }
     };
 
@@ -92,7 +92,7 @@ const MyMusic = () => {
               </div>
               <div className="mt-6">
                 <div className="block">
-                  {favorites.map((song, index) => (
+                  {getFavorites.map((song, index) => (
                     <div key={index} className="flex items-center justify-between py-2 pl-2 pr-1 rounded-lg border-transparent border w-full cursor-pointer hover:border-slate-800" onClick={() => handleSongClick(song)}>
                       <div className="group relative w-14 h-14 min-w-[3.5rem]">
                         <span className="relative block">

@@ -5,7 +5,7 @@ import { useUser } from '../../utils/UserProvider';
 
 const MusicPlayer = () => {
   const { currentSong } = useUser();
-  const [progress, setProgress] = useState(0);
+  const [getProgress, setProgress] = useState(0);
 
   useEffect(() => {
     if (currentSong) {
@@ -30,16 +30,16 @@ const MusicPlayer = () => {
         <AudioPlayer
           src={currentSong.audio_url}
           autoPlay
-          progress={progress}
+          getProgress={getProgress}
           onListen={handleListen}
           customProgressBarSection={[
-            <div key="progress-bar" className="w-full">
+            <div key="getProgress-bar" className="w-full">
               <input
                 type="range"
                 min="0"
                 max="100"
                 step="0.01"
-                value={progress}
+                value={getProgress}
                 className="h-8 absolute left-0 top-0 w-full cursor-pointer"
                 onChange={handleProgressChange}
               />

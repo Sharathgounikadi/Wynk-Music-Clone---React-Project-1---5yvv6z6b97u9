@@ -3,7 +3,7 @@ import { useUser } from '../../utils/UserProvider';
 import MusicPlayer from '../Music/MusicPlayer';
 
 const Search = () => {
-    const { setCurrentSong, currentSong } = useUser();
+    const { getCurrentSong, setCurrentSong} = useUser();
     const { searchData, setsearchData } = useUser();
     console.log(searchData);
 
@@ -31,7 +31,7 @@ const Search = () => {
                     ))}
                 </div>
             </div>
-            {currentSong && <MusicPlayer />}
+            {getCurrentSong && <MusicPlayer />}
         </div>
     );
 };

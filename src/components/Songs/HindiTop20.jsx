@@ -5,7 +5,7 @@ import { PROJECT_ID } from '../../utils/constant';
 import { useUser } from '../../utils/UserProvider';
 
 const HindiTop20 = () => {
-  const [data, setData] = useState([]);
+  const [getData, setData] = useState([]);
   const { setCurrentSong,currentSong } = useUser();
 
   useEffect(() => {
@@ -16,9 +16,9 @@ const HindiTop20 = () => {
             projectId: PROJECT_ID,
           },
         });
-        setData(response.data.data);
+        setData(response.getData.getData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching getData:", error);
       }
     };
 
@@ -69,7 +69,7 @@ const HindiTop20 = () => {
       <div className='mx-8 px-10'>
       <h2 className='text-2xl text-white pl-3'>Top 20 Hindi Songs</h2>
       <Slider {...settings}>
-          {data.map((song) => (
+          {getData.map((song) => (
             <div key={song._id} className='h-44 w-44 rounded-[40px] mt-3 focus:outline-none' onClick={() => handleClickSong(song)}>
             <img className='rounded-md h-full w-full' src={song.thumbnail} alt={song.title} />
             <h4 className='text-white truncate p-2'>{song.title}</h4>

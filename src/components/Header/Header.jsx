@@ -5,7 +5,7 @@ function Header() {
     const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
     const [activeLink, setActiveLink] = useState('All');
     const [isTrendingNowClicked, setIsTrendingNowClicked] = useState(false);
-    const [showHeader, setShowHeader] = useState(true);
+    const [getShowHeader, setShowHeader] = useState(true);
     const navigate = useNavigate(); 
     const location = useLocation();
 
@@ -39,7 +39,7 @@ function Header() {
     
 
     return (
-        <header className={`${showHeader ? 'block' : 'hidden'}`}>
+        <header className={`${getShowHeader ? 'block' : 'hidden'}`}>
             <div className='flex h-[70px] w-full text-[#f9f9f9] gap-7 items-center' >
                 <div className={`hover:underline underline-offset-[6px] ml-24 ${activeLink === 'All' ? 'text-white' : 'text-slate-400'}`}>
                     <Link to="/" title="All" onClick={() => handleLinkClick('All')}>All</Link>

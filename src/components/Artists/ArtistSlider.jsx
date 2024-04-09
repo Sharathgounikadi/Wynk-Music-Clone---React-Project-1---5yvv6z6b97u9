@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import { PROJECT_ID } from '../../utils/constant';
 
 const ArtistSlider = () => {
-  const [artistData, setArtistData] = useState([]);
+  const [getArtistData, setArtistData] = useState([]);
 
   useEffect(() => {
     const fetchArtistData = async () => {
@@ -63,7 +63,7 @@ const ArtistSlider = () => {
       <h2 className='text-2xl text-white pl-3'>Top Indie Artists</h2>
       <div className='h-full w-full pt-4 py-4 '>
         <Slider {...sliderSettings}>
-          {artistData.map((album) => (
+          {getArtistData.map((album) => (
             album.artists.map((artist) => (
               <div key={artist._id}>
                 <img className='rounded-full h-full w-full' src={artist.image} alt={artist.name} />

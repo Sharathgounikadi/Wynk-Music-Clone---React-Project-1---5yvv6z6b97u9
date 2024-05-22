@@ -19,8 +19,8 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
             let response;
             if (isLogin) {
                 response = await axios.post(LOGIN_API, {
-                    getEmail: getEmail,
-                    getPassword: getPassword,
+                    email: getEmail,
+                    password: getPassword,
                     appType: APP_TYPE,
                 }, {
                     headers: {
@@ -31,10 +31,10 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
                 toast.success('Login successful!', { autoClose: 2000 });
             } else {
                 response = await axios.post(SIGNUP_API, {
-                    getEmail: getEmail,
-                    getPassword: getPassword,
+                    email: getEmail,
+                    password: getPassword,
                     appType: APP_TYPE,
-                    getName: getName,
+                    name: getName,
                 }, {
                     headers: {
                         'Content-Type': 'application/json',

@@ -24,7 +24,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Signup" element={<AuthModal />} />
+        <Route path="/AuthModal" element={<AuthModal />} />
         <Route path="/subscription" element={<Subscription />} />
         <Route path="/trending" element={<TrendingNow />} />
         <Route path="/artist" element={<Artists />} />

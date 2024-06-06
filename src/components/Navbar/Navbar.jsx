@@ -81,7 +81,7 @@ const Navbar = () => {
                 </Link>
                 <div className='lg:flex lg:col-span-2 items-center justify-end pr-4 lg:pr-16'>
                     <div className='flex items-center border border-[#575757] shadow-inner bg-[#212121] lg:shadow-[#2A2A2A] h-8 lg:h-10 w-52 lg:w-72 rounded-full px-4 lg:px-8 gap-2 lg:gap-3'>
-                        <div className='flex gap-5' onClick={handleSearch}>
+                        <div className='flex gap-2 lg:gap-5' onClick={handleSearch}>
                             <CiSearch className='text-slate-200 h-5 lg:h-7 w-5 lg:w-7 cursor-pointer' />
                             <input
                                 type='search'
@@ -101,7 +101,7 @@ const Navbar = () => {
                             </span>
                             <div className="text-white hidden lg:block ml-2 font-light">Manage Subscription</div>
                         </span>
-                        {isUserLoggedIn === true ? (
+                        {isUserLoggedIn ? (
                             <>
                                 <RxDividerVertical className='text-white h-7 lg:h-10 w-7 lg:w-10' />
                                 <button className='hover:opacity-60 cursor-pointer text-white flex items-center h-8 lg:h-10 gap-1' onClick={handleMyMusicClick}>
@@ -132,6 +132,7 @@ const Navbar = () => {
             <AuthModal showLogin={showLogin} handleClose={() => setShowLogin(false)} navigate={navigate} />
             <ToastContainer />
         </div>
+
     );
 };
 export default Navbar;

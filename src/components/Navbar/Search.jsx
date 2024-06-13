@@ -1,37 +1,40 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useUser } from '../../utils/UserProvider';
 import MusicPlayer from '../Music/MusicPlayer';
 
 const Search = () => {
-    const { getCurrentSong, setCurrentSong} = useUser();
-    const { searchData, setsearchData } = useUser();
-    console.log(searchData);
-
-    useEffect(() => {
-    }, [searchData])
+    const { setCurrentSong, searchData } = useUser();
 
     const handleClickSong = (song) => {
         setCurrentSong(song);
     };
 
     return (
-        <div className="h-full">
-            <h2 className="text-left mx-20 my-10 text-xl text-white">Recent Searches</h2>
-            <div className='mx-20 my-10'>
-                <div className="flex-shrink-0 mt-5 gap-2">
-                    {searchData.map((song) => (
-                        <div key={song._id} className="inline-block sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 my-5" onClick={() => handleClickSong(song)}>
-                            <a title={song.title} className="rounded-xl">
-                                <div className="rounded-xl">
-                                    <img src={song.thumbnail} className="w-44 h-44 rounded-xl" />
-                                </div>
-                                <div className="truncate font-normal w-44 text-white text-base text-left pt-2">{song.title}</div>
-                            </a>
-                        </div>
-                    ))}
+        <div className="h-full ">
+            <h2 className="text-left mx-24 my-5 text-xl text-white">Search Results</h2>
+            <div className="mx-24">
+                <div className="grid gap-4 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-2 grid-cols-1">
+                    {searchData && searchData.length > 0 ? (
+                        searchData.map((song) => (
+                            <div
+                                key={song._id}
+                                className="cursor-pointer"
+                                onClick={() => handleClickSong(song)}
+                            >
+                                <a title={song.title} className="rounded-xl">
+                                    <div className="rounded-xl">
+                                        <img src={song.thumbnail} className="w-full h-44 rounded-xl object-cover" alt={song.title} />
+                                    </div>
+                                    <div className="truncate font-normal text-white text-base text-left pt-2">{song.title}</div>
+                                </a>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="text-white">No search results found.</div>
+                    )}
                 </div>
             </div>
-            {getCurrentSong && <MusicPlayer />}
+            <MusicPlayer />
         </div>
     );
 };

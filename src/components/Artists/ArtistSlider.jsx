@@ -4,27 +4,29 @@ import Slider from "react-slick";
 import { PROJECT_ID } from '../../utils/constant';
 
 const ArtistSlider = () => {
-  const [getArtistData, setArtistData] = useState([]);
+  const [artistData, setArtistData] = useState([]); // State to store artist data
 
   useEffect(() => {
+    // Function to fetch artist data from the API
     const fetchArtistData = async () => {
       try {
         const response = await axios.get("https://academics.newtonschool.co/api/v1/music/album", {
-          method: 'GET',
           headers: {
-            projectId: PROJECT_ID,
+            projectId: PROJECT_ID, // Use project ID from constants
           },
         });
+        // Append fetched data to the existing state
         setArtistData(prevArtistData => [...prevArtistData, ...response.data.data]);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data:", error); // Log any errors
       }
     };
 
-    fetchArtistData();
+    fetchArtistData(); // Call the fetch function when the component mounts
   }, []);
 
-  var sliderSettings = {
+  // Slider settings configuration
+  const sliderSettings = {
     dots: false,
     infinite: false,
     speed: 500,
@@ -42,14 +44,15 @@ const ArtistSlider = () => {
         }
       },
       {
-        breakpoint: 768, // for tablets
+        breakpoint: 600,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2
+          slidesToScroll: 2,
+          initialSlide: 2
         }
       },
       {
-        breakpoint: 480, // for mobile devices
+        breakpoint: 480,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1
@@ -60,13 +63,13 @@ const ArtistSlider = () => {
 
   return (
     <div className='mx-8 px-10'>
-      <h2 className='text-2xl text-white pl-3'>Top Indie Artists</h2>
-      <div className='h-full w-full pt-4 py-4 '>
+      <h2 className='text-2xl text-white pl-3'>Top India Artists</h2>
+      <div className='h-full w-full pt-4 py-4'>
         <Slider {...sliderSettings}>
-          {getArtistData.map((album) => (
+          {artistData.map((album) => (
             album.artists.map((artist) => (
               <div key={artist._id}>
-                <img className='rounded-full h-full w-full' src={artist.image} alt={artist.name} />
+                <img className='rounded-full h-[160px] w-[160px]' src={artist.image} alt={artist.name} />
                 <h4 className='text-white truncate p-2'>{artist.name}</h4>
               </div>
             ))

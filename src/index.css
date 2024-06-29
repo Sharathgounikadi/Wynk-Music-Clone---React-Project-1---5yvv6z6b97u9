@@ -8,6 +8,16 @@
     }
 }
 
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+  }
+}
+
 .rhap_container {
     background-color: #252525 !important;
     box-shadow: none !important;

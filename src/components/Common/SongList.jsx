@@ -11,6 +11,7 @@ const SongList = () => {
 
   const handleClickSong = (song) => {
     setCurrentSong(song);
+    console.log(song._id)
   };
 
   return (
@@ -19,6 +20,7 @@ const SongList = () => {
       <div className="ml-5 sm:mx-5 mb-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
         {songsData.map((song) => (
           <div key={song._id} className="mb-6" onClick={() => handleClickSong(song)}>
+            
             <a title={song.title} className="rounded-xl block">
               <div className="w-full rounded-xl overflow-hidden">
                 <img alt={song.title} src={song.thumbnail} className="w-full h-auto rounded-lg" />

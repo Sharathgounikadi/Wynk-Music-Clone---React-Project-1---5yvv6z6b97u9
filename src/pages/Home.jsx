@@ -30,7 +30,7 @@ const Home = () => {
       <EvergreenMelodies />
       <Top50ThisMonth />
       <About />
-      {currentSong&&<MusicPlayer/>}
+      {currentSong && <MusicPlayer/>}
     </div>
   )
 }

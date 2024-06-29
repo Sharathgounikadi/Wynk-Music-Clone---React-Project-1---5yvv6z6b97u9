@@ -1,47 +1,37 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
-// Create a context for user information
 const UserContext = createContext();
 
-// Provider component to wrap around the app and provide user context
 export const UserProvider = ({ children }) => {
-  // State to manage user information and status
-  const [userName, setUserName] = useState(localStorage.getItem('userName') || 'Welcome to Wynk');
+  const [userName, setUserName] = useState(localStorage.getItem('userName') || 'Guest');
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(localStorage.getItem('isUserLoggedIn') === 'true');
   const [currentSong, setCurrentSong] = useState(null);
   const [searchData, setSearchData] = useState([]);
 
-  // Function to handle user login/signup
+  useEffect(() => {
+    setUserName(localStorage.getItem('userName') || 'Guest');
+    setIsUserLoggedIn(localStorage.getItem('isUserLoggedIn') === 'true');
+  }, []);
+
   const loginSignupContext = (userName, token) => {
     setUserName(userName);
     setIsUserLoggedIn(true);
     localStorage.setItem('userName', userName);
     localStorage.setItem('isUserLoggedIn', 'true');
     localStorage.setItem('token', token);
-    console.log("User signed in:", userName);
   };
 
-  // Function to handle user logout
   const signOutContext = () => {
-    setUserName('Welcome to Wynk');
+    setUserName('Guest');
     setIsUserLoggedIn(false);
-    localStorage.setItem('userName', 'Welcome to Wynk');
+    localStorage.setItem('userName', 'Guest');
     localStorage.setItem('isUserLoggedIn', 'false');
-    localStorage.setItem('token', '');
-    console.log("User signed out");
+    localStorage.removeItem('token');
   };
 
-  // Context value to be provided to consuming components
-  const value = { 
-    userName, 
-    loginSignupContext, 
-    signOutContext, 
-    isUserLoggedIn, 
-    setCurrentSong, 
-    currentSong, 
-    searchData, 
-    setSearchData 
-  };
+  const value = {
+    userName,loginSignupContext,signOutContext,isUserLoggedIn,setCurrentSong,
+    currentSong,searchData,setSearchData};
 
   return (
     <UserContext.Provider value={value}>
@@ -50,7 +40,6 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the UserContext
 export function useUser() {
   return useContext(UserContext);
 }

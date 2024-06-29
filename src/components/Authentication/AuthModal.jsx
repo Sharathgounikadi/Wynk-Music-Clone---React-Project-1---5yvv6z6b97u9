@@ -51,23 +51,33 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
                 });
                 toast.success('Signup successful!', { autoClose: 2000 });
             }
-
+    
             // Extract token and user data from the response
             const token = response.data.token;
             const responseData = response.data.data;
             const userName = isLogin ? responseData.name : name;
-
+    
             // Update context with user data and token
             loginSignupContext(userName, token);
-
+    
             // Close the modal and navigate to home page
             handleClose();
             navigate('/');
         } catch (error) {
             // Show error message on failed login/signup
-            toast.error('Wrong Credentials. Please try again.', { autoClose: 2000 });
+            if (error.response) {
+                const errorMessage = error.response.data.message;
+                if (isLogin) {
+                    toast.error(errorMessage || 'Login failed. Please try again.', { autoClose: 2000 });
+                } else {
+                    toast.error(errorMessage || 'Signup failed. Please try again.', { autoClose: 2000 });
+                }
+            } else {
+                toast.error('An error occurred. Please try again.', { autoClose: 2000 });
+            }
         }
     };
+    
 
     return (
         <Modal

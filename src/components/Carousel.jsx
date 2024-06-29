@@ -78,7 +78,7 @@ const smallCarouselData = [
 
 ]
 
-const CarouselMulti = () => {
+const Carousel = () => {
     const screenWidth = window.innerWidth;
     const slideNum = screenWidth > 640 ? 2 : 1
     const settings = {
@@ -91,7 +91,7 @@ const CarouselMulti = () => {
         prevArrow: <GrNext />,
     };
     return (
-        <div className='my-5 mx-auto w-[95%]'>
+        <div className='mx-auto my-2 w-[95%]'>
             <Slider {...settings}>
                 {smallCarouselData.map((data) => (
                     <div key={data.id} className='h-[250px]  w-[250px] rounded'>
@@ -105,4 +105,4 @@ const CarouselMulti = () => {
     )
 }
 
-export default CarouselMulti
+export default Carousel

@@ -8,7 +8,7 @@ import { IoIosShareAlt } from "react-icons/io";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ToastContainer, toast } from 'react-toastify';
 import MusicPlayer from './MusicPlayer';
-// import { useUser } from '../../utils/UserProvider';
+import { useUser } from '../../utils/UserProvider';
 import { useLocation } from 'react-router-dom';
 
 const MyMusic = (songId) => {

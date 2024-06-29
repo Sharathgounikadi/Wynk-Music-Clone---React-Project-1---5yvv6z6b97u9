@@ -4,7 +4,6 @@ import { useUser } from '../../utils/UserProvider';
 import DownloadModal from './DownloadModal';
 import UnderMaintenance from '../Common/UnderMaintenance'
 import AuthModal from '../Authentication/AuthModal';
-import { useUser } from '../../utils/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineDownloadForOffline } from "react-icons/md";
 import { BsTranslate, BsCurrencyRupee } from "react-icons/bs";

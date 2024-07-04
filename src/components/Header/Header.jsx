@@ -24,7 +24,7 @@ function Header() {
         } else if (link === 'Old Songs' || link === 'New Songs') {
             navigate(`/songs/${link.toLowerCase().replace(' ', '_')}`);
         } else if (link === 'Happy' || link === 'Excited' || link === 'Romantic' || link === 'Sad' || link === 'Party' || link === 'Dance') {
-            navigate(`/moodlist/${link.toLowerCase()}`);
+            navigate(`/songlist/${link.toLowerCase()}`);
         } else if (link.startsWith('Top') && link.endsWith('Albums')) {
             navigate(`/albums/${link.split(' ').slice(1).join('_').toLowerCase()}`);
         } else if (link === 'Podcast') {
@@ -40,7 +40,7 @@ function Header() {
                 mood === 'Excited' ? excited :
                     mood === 'Romantic' ? romantic :
                         [];
-        navigate(`/moodlist/${mood.toLowerCase()}`, { state: { data: playlist } });
+        navigate(`/songlist/${mood.toLowerCase()}`, { state: { data: playlist } });
     };
 
     useEffect(() => {
@@ -66,7 +66,7 @@ function Header() {
             "/subscription",
             "/search",
             "/mymusic",
-            "/moodlist",
+            "/songlist",
             "/selectsound",
             "/selectlanguage",
             "/podcast"

@@ -37,7 +37,7 @@ const App = () => {
         <Route path="/albums/telugu" element={<TopTeluguAlbums />} />
         <Route path="/albums/tamil" element={<TopTamilAlbums/>} />
         <Route path="/albums/bhojpuri" element={<TopBhojpuriAlbums />} />
-        <Route path="/playlist/:mood" element={<SongList setCurrentSong={setCurrentSong} />} />
+        <Route path="/songlist/:mood" element={<SongList setCurrentSong={setCurrentSong} />} />
         <Route path="/songs/:category" element={<SongCard />} />
         <Route path="/mymusic" element={<ProtectedRoute component={MyMusic} />} />
         <Route path="/search" element={<Search />} />

@@ -80,15 +80,20 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
         }
     };
 
+    const handleModalClose = () => {
+        handleClose();
+        setIsLogin(true); // Reset to show login button and the "Don't have an account?" message when the modal is reopened
+    };
+
     return (
         <Modal
             open={showLogin}
-            onClose={handleClose}
+            onClose={handleModalClose}
             aria-labelledby="Credential Modal"
             style={{ backdropFilter: "blur(5px)" }}
         >
             <div className="h-[450px] w-[320px] lg:w-[750px] grid grid-cols-1 lg:grid-cols-5 bg-black absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] rounded-xl relative">
-                <button onClick={handleClose} className="absolute top-2 right-2 text-white text-2xl">
+                <button onClick={handleModalClose} className="absolute top-2 right-2 text-white text-2xl">
                     <AiOutlineClose />
                 </button>
                 <div className='lg:col-span-2'>
@@ -136,13 +141,28 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
                         >
                             {isLogin ? 'Login' : 'Sign Up'}
                         </button>
-                        <button
-                            className='bg-blue-500 h-10 w-24 lg:w-40 rounded-md text-xs lg:text-base hover:bg-blue-600'
-                            onClick={() => setIsLogin(!isLogin)}
-                        >
-                            {isLogin ? 'Sign Up' : 'Login'}
-                        </button>
                     </div>
+                    {isLogin ? (
+                        <p className='text-white text-xs lg:text-sm mt-4'>
+                            Don't have an account?{' '}
+                            <button
+                                className='text-blue-500 hover:underline'
+                                onClick={() => setIsLogin(false)}
+                            >
+                                Sign Up
+                            </button>
+                        </p>
+                    ) : (
+                        <p className='text-white text-xs lg:text-sm mt-4'>
+                            Already have an account?{' '}
+                            <button
+                                className='text-blue-500 hover:underline'
+                                onClick={() => setIsLogin(true)}
+                            >
+                                Login
+                            </button>
+                        </p>
+                    )}
                     <div className='flex items-center justify-center'>
                         <p className='text-white text-xs lg:text-sm'>Available on</p>
                         <img src={asImg} alt='App Store' className='h-10 lg:h-14 w-24 lg:w-32' />

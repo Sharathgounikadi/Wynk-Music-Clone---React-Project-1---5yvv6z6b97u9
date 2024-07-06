@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useUser } from '../../utils/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { LuCrown, LuDot } from "react-icons/lu";
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import Navbar from '../Navbar/Navbar';
+import { IoIosArrowBack } from 'react-icons/io'; // Importing back arrow icon
 
 const Subscription = () => {
-
     const { isUserLoggedIn } = useUser();
     const navigate = useNavigate();
 
@@ -16,8 +16,18 @@ const Subscription = () => {
         }
     }, [isUserLoggedIn])
 
+    const underDevelopment = () => {
+        toast("Feature under Development");
+    }
+
+    const goToHomePage = () => {
+        navigate('/');
+    }
+
     return (
         <div>
+            <ToastContainer/>
+            {/* <Navbar/> */}
             <div className="w-full h-[230px] bg-[#1f272b] box-border flex relative justify-center" style={{ clipPath: 'ellipse(100% 75% at 50% 15%)' }}>
                 <img className="w-[14%] -mt-32 " alt="logo" src="https://pay.wynk.in/static/media/Wynklogo-white.97aea089.svg" />
             </div>
@@ -110,18 +120,22 @@ const Subscription = () => {
             </div>
             <div className="bg-gray-800 rounded-lg mx-64 flex-row p-2 items-center max-w-5xl">
                 <div className='flex flex-row justify-between'>
-                <div className='flex flex-col'>
-                    <h2 className="text-white text-sm font-bold">Amount to be paid</h2>
-                    <p className="text-gray-400 text-sm font-medium">₹399</p>
-                </div>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Continue
-                </button>
+                    <div className='flex flex-col'>
+                        <h2 className="text-white text-sm font-bold">Amount to be paid</h2>
+                        <p className="text-gray-400 text-sm font-medium">₹399</p>
+                    </div>
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={underDevelopment}>
+                        Continue
+                    </button>
                 </div>
             </div>
-
+            {/* Back arrow button */}      
+            <button className="absolute top-0 left-0 m-4 text-white text-lg p-2 bg-red-400 rounded-full" onClick={goToHomePage}>Go back to Home
+                {/* Using IoIosArrowBack from react-icons */}
+                {/* <IoIosArrowBack />  */}
+            </button>
         </div>
     )
 }
 
-export default Subscription
+export default Subscription;

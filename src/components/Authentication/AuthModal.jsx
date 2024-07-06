@@ -8,23 +8,30 @@ import asImg from "../../assets/images/AppStore.png";
 import psImg from '../../assets/images/PlayStore.png';
 import { APP_TYPE, PROJECT_ID, LOGIN_API, SIGNUP_API } from '../../utils/constant';
 import { useUser } from '../../utils/UserProvider';
+import { AiOutlineClose, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const AuthModal = ({ showLogin, handleClose, navigate }) => {
-    // State variables for user inputs and login/signup toggle
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [isLogin, setIsLogin] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
 
-    // Context to manage user login/signup status
     const { loginSignupContext } = useUser();
 
-    // Function to handle form submission
+    const validateEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
     const handleSubmit = async () => {
+        if (!validateEmail(email)) {
+            toast.error('Invalid email format', { autoClose: 1000 });
+            return;
+        }
+
         try {
             let response;
             if (isLogin) {
-                // Handle login
                 response = await axios.post(LOGIN_API, {
                     email,
                     password,
@@ -35,9 +42,8 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
                         'projectId': PROJECT_ID,
                     },
                 });
-                toast.success('Login successful!', { autoClose: 2000 });
+                toast.success('Login successful!', { autoClose: 1000 });
             } else {
-                // Handle signup
                 response = await axios.post(SIGNUP_API, {
                     email,
                     password,
@@ -49,35 +55,30 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
                         'projectId': PROJECT_ID,
                     },
                 });
-                toast.success('Signup successful!', { autoClose: 2000 });
+                toast.success('Signup successful!', { autoClose: 1000 });
             }
-    
-            // Extract token and user data from the response
+
             const token = response.data.token;
             const responseData = response.data.data;
             const userName = isLogin ? responseData.name : name;
-    
-            // Update context with user data and token
+
             loginSignupContext(userName, token);
-    
-            // Close the modal and navigate to home page
+
             handleClose();
             navigate('/');
         } catch (error) {
-            // Show error message on failed login/signup
             if (error.response) {
                 const errorMessage = error.response.data.message;
                 if (isLogin) {
-                    toast.error(errorMessage || 'Login failed. Please try again.', { autoClose: 2000 });
+                    toast.error(errorMessage || 'Login failed. Please try again.', { autoClose: 1000 });
                 } else {
-                    toast.error(errorMessage || 'Signup failed. Please try again.', { autoClose: 2000 });
+                    toast.error(errorMessage || 'Signup failed. Please try again.', { autoClose: 1000 });
                 }
             } else {
-                toast.error('An error occurred. Please try again.', { autoClose: 2000 });
+                toast.error('An error occurred. Please try again.', { autoClose: 1000 });
             }
         }
     };
-    
 
     return (
         <Modal
@@ -86,47 +87,57 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
             aria-labelledby="Credential Modal"
             style={{ backdropFilter: "blur(5px)" }}
         >
-            <div className="h-[450px] w-[320px] lg:w-[750px] grid grid-cols-1 lg:grid-cols-5 bg-black absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] rounded-xl">
-                {/* Left side image */}
+            <div className="h-[450px] w-[320px] lg:w-[750px] grid grid-cols-1 lg:grid-cols-5 bg-black absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] rounded-xl relative">
+                <button onClick={handleClose} className="absolute top-2 right-2 text-white text-2xl">
+                    <AiOutlineClose />
+                </button>
                 <div className='lg:col-span-2'>
                     <img src={loginImg} alt='Login/SignUp Image' className='h-[450px] w-full lg:rounded-tl-xl lg:rounded-bl-xl' />
                 </div>
-                {/* Right side form */}
                 <div className='lg:col-span-3 p-5 flex flex-col items-center justify-around'>
                     <h1 className='text-white text-3xl w-full'>{isLogin ? 'Login' : 'Sign Up'}</h1>
                     <p className='text-white text-sm lg:text-base'>Get a personalized experience and access all your music</p>
-                    {!isLogin && 
-                        <input 
-                            type='text' 
-                            placeholder='Username' 
-                            value={name} 
-                            onChange={(e) => setName(e.target.value)} 
-                            className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' 
+                    {!isLogin &&
+                        <input
+                            type='text'
+                            placeholder='Username'
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full'
                         />
                     }
-                    <input 
-                        type='email' 
-                        placeholder='Email' 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' 
+                    <input
+                        type='email'
+                        placeholder='Email'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full'
                     />
-                    <input 
-                        type='password' 
-                        placeholder='Password' 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full' 
-                    />
+                    <div className="relative w-full">
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder='Password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className='text-white bg-[#1B1B1C] focus:outline-none px-2 h-10 rounded-md w-full pr-10'
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute top-1/2 right-2 transform -translate-y-1/2 text-white"
+                        >
+                            {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                        </button>
+                    </div>
                     <div className='flex items-center gap-2'>
-                        <button 
-                            className='bg-white h-10 w-24 lg:w-40 rounded-md text-xs lg:text-base' 
+                        <button
+                            className='bg-green-500 h-10 w-24 lg:w-40 rounded-md text-xs lg:text-base hover:bg-green-600'
                             onClick={handleSubmit}
                         >
                             {isLogin ? 'Login' : 'Sign Up'}
                         </button>
-                        <button 
-                            className='bg-white h-10 w-24 lg:w-40 rounded-md text-xs lg:text-base' 
+                        <button
+                            className='bg-blue-500 h-10 w-24 lg:w-40 rounded-md text-xs lg:text-base hover:bg-blue-600'
                             onClick={() => setIsLogin(!isLogin)}
                         >
                             {isLogin ? 'Sign Up' : 'Login'}

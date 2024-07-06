@@ -15,6 +15,8 @@ const TrendingNow = () => {
   const [data, setData] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [watchList, setWatchList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const token = localStorage.getItem("token");
 
   const fetchFavorites = useCallback(async () => {
@@ -28,6 +30,7 @@ const TrendingNow = () => {
       setWatchList(response.data.data.songs.map(fav => fav._id));
     } catch (error) {
       console.error('Error fetching favorites:', error);
+      setError(error);
     }
   }, [token]);
 
@@ -42,8 +45,11 @@ const TrendingNow = () => {
         },
       });
       setData(response.data.data);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
+      setError(error);
+      setLoading(false);
     }
   }, []);
 
@@ -60,7 +66,7 @@ const TrendingNow = () => {
     const isFavorite = watchList.includes(songId);
     const url = `https://academics.newtonschool.co/api/v1/music/favorites/${isFavorite ? 'unlike' : 'like'}`;
     const action = isFavorite ? 'removed from' : 'added to';
-  
+
     try {
       const response = await axios.patch(url, { songId }, {
         headers: {
@@ -68,17 +74,9 @@ const TrendingNow = () => {
           Authorization: `Bearer ${token}`
         }
       });
-  
-      // Update watchList state based on response
+
       if (response.status === 200) {
-        setWatchList(prevWatchList => {
-          if (isFavorite) {
-            return prevWatchList.filter(id => id !== songId);
-          } else {
-            return [...prevWatchList, songId];
-          }
-        });
-  
+        setWatchList(prevWatchList => isFavorite ? prevWatchList.filter(id => id !== songId) : [...prevWatchList, songId]);
         toast.success(`Music ${action} favorite`);
       } else {
         toast.error(`Failed to ${action} favorite`);
@@ -88,7 +86,6 @@ const TrendingNow = () => {
       toast.error('Error updating favorite');
     }
   };
-  
 
   const handleFollowToggle = () => {
     setIsFollowing(prevState => !prevState);
@@ -108,6 +105,9 @@ const TrendingNow = () => {
   const handleNotifyClick = () => {
     toast.info('Feature under development');
   };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error loading data</div>;
 
   return (
     <div className="h-full w-full">
@@ -152,7 +152,7 @@ const TrendingNow = () => {
             <div className="block">
               {data.map((song, index) => (
                 <SongItem
-                  key={song.id}
+                  key={song._id}
                   song={song}
                   index={index}
                   watchList={watchList}

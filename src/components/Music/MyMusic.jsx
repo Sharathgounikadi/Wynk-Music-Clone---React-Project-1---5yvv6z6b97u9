@@ -10,14 +10,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import MusicPlayer from './MusicPlayer';
 import { useUser } from '../../utils/UserProvider';
 import { useLocation } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 
-const MyMusic = (songId) => {
+const MyMusic = () => {
   const [favorites, setFavorites] = useState([]);
-  const [showHeader, setShowHeader] = useState(true); 
+  const [showHeader, setShowHeader] = useState(true);
   const location = useLocation();
+  const { currentSong, setCurrentSong, getToken } = useUser();
 
   useEffect(() => {
-    setShowHeader(location.pathname !== '/mymusic'); 
+    setShowHeader(location.pathname !== '/mymusic');
   }, [location]);
 
   useEffect(() => {
@@ -43,11 +45,8 @@ const MyMusic = (songId) => {
     fetchFavorites();
   }, []);
 
-  const { currentSong, setCurrentSong, getToken } = useUser();
-
   const handleSongClick = (song) => {
     setCurrentSong(song);
-    //console.log(song);
   };
 
   const handlePlaySongs = () => {
@@ -58,23 +57,27 @@ const MyMusic = (songId) => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
-        const response = await axios.patch(
-          'https://academics.newtonschool.co/api/v1/music/favorites/like',
-          { songId: songId },
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'projectId': PROJECT_ID,
-            }
+        const isFavorite = favorites.some(song => song._id === songId);
+        const url = `https://academics.newtonschool.co/api/v1/music/favorites/${isFavorite ? 'unlike' : 'like'}`;
+        const response = await axios.patch(url, { songId: songId }, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'projectId': PROJECT_ID,
           }
-        );
-        const updatedFavorites = favorites.map(song => {
-          if (song._id === songId) {
-            return { ...song, liked: true };
-          }
-          return song;
         });
-        setFavorites(updatedFavorites);
+        if (response.status === 200) {
+          setFavorites(prevFavorites => {
+            if (isFavorite) {
+              toast.success('Song removed from playlist');
+              return prevFavorites.filter(song => song._id !== songId);
+            } else {
+              toast.success('Song added to playlist');
+              return [...prevFavorites, response.data.data];
+            }
+          });
+        } else {
+          console.error('Failed to update favorites');
+        }
       } else {
         console.error('Token not found in local storage');
       }
@@ -143,22 +146,19 @@ const MyMusic = (songId) => {
                       </div>
                     </div>
                     <div className="flex items-center text-xl gap-4 cursor-pointer text-white">
+                      <button onClick={(e) => { e.stopPropagation(); updateFavorites(song._id); }}>
+                        {favorites.some(fav => fav._id === song._id) ? (
+                          <i className="fa-solid fa-heart" style={{ color: 'red' }}></i>
+                        ) : (
+                          <i className="fa-regular fa-heart"></i>
+                        )}
+                      </button>
                       <button onClick={handlePlaySongs}>
                         <MdOutlineFileDownload />
                       </button>
                       <button onClick={handlePlaySongs}>
                         <BsThreeDotsVertical />
                       </button>
-                      {getToken && !song.liked && (
-                        <button onClick={() => updateFavorites(song._id)}>
-                          <i className="fa-regular fa-heart"></i>
-                        </button>
-                      )}
-                      {getToken && song.liked && (
-                        <button>
-                          <i className="fa-solid fa-heart" style={{ color: 'red' }}></i>
-                        </button>
-                      )}
                     </div>
                   </div>
                 ))}
@@ -168,6 +168,7 @@ const MyMusic = (songId) => {
         </div>
       </div>
       {currentSong && <MusicPlayer song={currentSong} />}
+      <ToastContainer />
     </div>
   );
 };

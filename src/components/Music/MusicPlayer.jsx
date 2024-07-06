@@ -4,6 +4,8 @@ import 'react-h5-audio-player/lib/styles.css';
 import axios from 'axios';
 import { useUser } from '../../utils/UserProvider';
 import { PROJECT_ID } from '../../utils/constant';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MusicPlayer = () => {
   const { currentSong } = useUser();
@@ -12,8 +14,25 @@ const MusicPlayer = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    setIsLiked(false);
+    if (currentSong) {
+      fetchFavoriteState(currentSong._id);
+    }
   }, [currentSong]);
+
+  const fetchFavoriteState = async (songId) => {
+    try {
+      const response = await axios.get('https://academics.newtonschool.co/api/v1/music/favorites', {
+        headers: {
+          projectID: PROJECT_ID,
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const favoriteIds = response.data.data.songs.map(fav => fav._id);
+      setIsLiked(favoriteIds.includes(songId));
+    } catch (error) {
+      console.error('Error fetching favorite state:', error);
+    }
+  };
 
   const handleProgressChange = (e) => {
     const newProgress = parseFloat(e.target.value);
@@ -26,20 +45,29 @@ const MusicPlayer = () => {
     setProgress(newProgress);
   };
 
-  const onClickHandler = (songId) => {
-    axios.patch('https://academics.newtonschool.co/api/v1/music/favorites/like', { songId }, {
-      headers: {
-        projectID: PROJECT_ID,
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then((response) => {
-        console.log(response.data);
-        setIsLiked(true);
-      })
-      .catch((error) => {
-        console.error('Error making the PATCH request:', error); // Proper error handling needed
+  const handleFavoriteToggle = async (songId) => {
+    const isFavorite = isLiked;
+    const url = `https://academics.newtonschool.co/api/v1/music/favorites/${isFavorite ? 'unlike' : 'like'}`;
+    const action = isFavorite ? 'removed from' : 'added to';
+
+    try {
+      const response = await axios.patch(url, { songId }, {
+        headers: {
+          projectID: PROJECT_ID,
+          Authorization: `Bearer ${token}`
+        }
       });
+
+      if (response.status === 200) {
+        setIsLiked(!isFavorite);
+        toast.success(`Music ${action} favorite`,{autoClose:1000});
+      } else {
+        toast.error(`Failed to ${action} favorite`,{autoClose:1000});
+      }
+    } catch (error) {
+      console.error('Error updating favorite:', error);
+      toast.error('Error updating favorite');
+    }
   };
 
   return (
@@ -73,18 +101,19 @@ const MusicPlayer = () => {
                   </div>
                 </div>
               </div>
-              <div  className='ml-[50%] pt-3 '>
-                  {token && !isLiked && (
-                    <i className="far fa-heart cursor-pointer text-xl" onClick={() => onClickHandler(currentSong._id)} />
-                  )}
-                  {token && isLiked && (
-                    <i className="fas fa-heart text-red-500 text-xl cursor-pointer" />
-                  )}
-                </div>
+              <div className='ml-[50%] pt-3 '>
+                {token && !isLiked && (
+                  <i className="far fa-heart cursor-pointer text-xl" onClick={() => handleFavoriteToggle(currentSong._id)} />
+                )}
+                {token && isLiked && (
+                  <i className="fas fa-heart text-red-500 text-xl cursor-pointer" onClick={() => handleFavoriteToggle(currentSong._id)} />
+                )}
+              </div>
             </div>
           ]}
         />
       )}
+      <ToastContainer />
     </section>
   );
 };

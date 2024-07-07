@@ -7,7 +7,7 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import { BsCircle, BsDot, BsThreeDotsVertical } from "react-icons/bs";
 import { useUser } from '../../utils/UserProvider';
 import { PROJECT_ID } from '../../utils/constant';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const TrendingNow = () => {
@@ -77,9 +77,9 @@ const TrendingNow = () => {
 
       if (response.status === 200) {
         setWatchList(prevWatchList => isFavorite ? prevWatchList.filter(id => id !== songId) : [...prevWatchList, songId]);
-        toast.success(`Music ${action} favorite`);
+        toast.success(`Music ${action} favorite`,{autoClose:1000});
       } else {
-        toast.error(`Failed to ${action} favorite`);
+        toast.error(`Failed to ${action} favorite`,{autoClose:1000});
       }
     } catch (error) {
       console.error('Error updating favorite:', error);
@@ -103,7 +103,7 @@ const TrendingNow = () => {
   };
 
   const handleNotifyClick = () => {
-    toast.info('Feature under development');
+    toast.info('Feature under development', { autoClose: 500 });
   };
 
   if (loading) return <div>Loading...</div>;
@@ -138,13 +138,13 @@ const TrendingNow = () => {
               </button>
             </div>
             <div className="inline-flex gap-14 justify-between mr-2">
-              <button onClick={handleNotifyClick} className="relative cursor-pointer" type="button">
+              <button  className="relative cursor-pointer" type="button">
                 <BsCircle className="text-white text-4xl bg-transparent absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                <MdOutlineFileDownload className="text-white text-2xl bg-transparent absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                <MdOutlineFileDownload onClick={handleNotifyClick} className="text-white text-2xl bg-transparent absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
               </button>
-              <button onClick={handleNotifyClick} className="relative cursor-pointer" type="button">
+              <button className="relative cursor-pointer" type="button">
                 <BsCircle className="text-white text-4xl bg-transparent absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                <BsThreeDotsVertical className="text-white text-xl bg-transparent absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                <BsThreeDotsVertical onClick={handleNotifyClick} className="text-white text-xl bg-transparent absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
               </button>
             </div>
           </div>
@@ -164,10 +164,14 @@ const TrendingNow = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       {currentSong && <MusicPlayer />}
     </div>
   );
+};
+
+const handleNotifyClick = () => {
+  toast.info('Feature under development', { autoClose: 500 });
 };
 
 const SongItem = ({ song, index, watchList, onClickSong, onClickFavorite }) => (
@@ -203,10 +207,10 @@ const SongItem = ({ song, index, watchList, onClickSong, onClickFavorite }) => (
         style={{ color: watchList.includes(song._id) ? 'red' : 'white' }}
         onClick={() => onClickFavorite(song._id)}
       ></i>
-      <button>
+      <button onClick={handleNotifyClick}>
         <a className="cursor-pointer"><MdOutlineFileDownload /></a>
       </button>
-      <button>
+      <button onClick={handleNotifyClick}>
         <a className="cursor-pointer"><BsThreeDotsVertical /></a>
       </button>
     </div>

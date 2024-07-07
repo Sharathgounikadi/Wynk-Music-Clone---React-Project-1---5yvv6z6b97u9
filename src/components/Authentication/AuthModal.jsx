@@ -92,7 +92,7 @@ const AuthModal = ({ showLogin, handleClose, navigate }) => {
             aria-labelledby="Credential Modal"
             style={{ backdropFilter: "blur(5px)" }}
         >
-            <div className="h-[450px] w-[320px] lg:w-[750px] grid grid-cols-1 lg:grid-cols-5 bg-black absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] rounded-xl relative">
+            <div className="h-[450px] w-[320px] lg:w-[750px] grid grid-cols-1 lg:grid-cols-5 bg-black absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] rounded-xl">
                 <button onClick={handleModalClose} className="absolute top-2 right-2 text-white text-2xl">
                     <AiOutlineClose />
                 </button>

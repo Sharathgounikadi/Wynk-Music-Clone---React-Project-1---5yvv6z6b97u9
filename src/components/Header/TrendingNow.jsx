@@ -79,7 +79,7 @@ const TrendingNow = () => {
         setWatchList(prevWatchList => isFavorite ? prevWatchList.filter(id => id !== songId) : [...prevWatchList, songId]);
         toast.success(`Music ${action} favorite`,{autoClose:1000});
       } else {
-        toast.error(`Failed to ${action} favorite`,{autoClose:1000});
+        toast.error(`Failed to ${action} favorite`);
       }
     } catch (error) {
       console.error('Error updating favorite:', error);

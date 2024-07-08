@@ -44,7 +44,7 @@ const App = () => {
         <Route path="/selectlanguage" element={<UnderMaintenance />} />  
         <Route path="/selectsound" element={<UnderMaintenance />} /> 
         <Route path="/podcast" element={<UnderMaintenance />} />
-        {/* <Route path='/Maintenance' element={<UnderMaintenance/>}/> */}
+        <Route path='/Maintenance' element={<UnderMaintenance/>}/>
       </Routes>
       <Footer />
     </Router>

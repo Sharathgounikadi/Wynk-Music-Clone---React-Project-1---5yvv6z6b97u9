@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { PROJECT_ID } from '../../utils/constant';
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Header() {
     const [activeLink, setActiveLink] = useState('All');
@@ -15,10 +15,6 @@ function Header() {
     const [romantic, setRomantic] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
-
-    const notify = () => {
-        toast('Feature under development', { autoClose: 500 });
-      };
 
     const handleLinkClick = (link) => {
         setActiveLink(link);
@@ -64,7 +60,7 @@ function Header() {
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
-        }; 
+        };
         fetchData();
 
         const hideHeaderPaths = [
@@ -79,6 +75,10 @@ function Header() {
         const shouldShowHeader = !hideHeaderPaths.some(path => location.pathname.includes(path));
         setShowHeader(shouldShowHeader);
     }, [location]);
+
+    const notify = () => {
+        toast('Feature under development', { autoClose: 500 });
+    };
 
     return (
         <header className={`${showHeader ? 'block' : 'hidden'}`}>
@@ -137,14 +137,14 @@ function Header() {
                         </button>
                         {isAlbumOpen && (
                             <div className="absolute top-full w-48 h-auto p-4 rounded-xl border-none border-[#575757] shadow-inner bg-[#212121] shadow-[#2A2A2A] z-50 left-1/2 transform -translate-x-1/2">
-                            <div className='bg-transparent items-center justify-center '>
-                                <Link to="/albums/hindi" className={`py-2 block hover:underline ${activeLink === 'Top Hindi Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Hindi Albums')}>Top Hindi Albums</Link>
-                                <Link to="/albums/english" className={`py-2 block hover:underline ${activeLink === 'Top English Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top English Albums')}>Top English Albums</Link>
-                                <Link to="/albums/telugu" className={`py-2 block hover:underline ${activeLink === 'Top Telugu Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Telugu Albums')}>Top Telugu Albums</Link>
-                                <Link to="/albums/tamil" className={`py-2 block hover:underline ${activeLink === 'Top Tamil Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Tamil Albums')}>Top Tamil Albums</Link>
-                                <Link to="/albums/bhojpuri" className={`py-2 block hover:underline ${activeLink === 'Top Bhojpuri Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Bhojpuri Albums')}>Top Bhojpuri Albums</Link>
+                                <div className='bg-transparent items-center justify-center '>
+                                    <Link to="/albums/hindi" className={`py-2 block hover:underline ${activeLink === 'Top Hindi Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Hindi Albums')}>Top Hindi Albums</Link>
+                                    <Link to="/albums/english" className={`py-2 block hover:underline ${activeLink === 'Top English Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top English Albums')}>Top English Albums</Link>
+                                    <Link to="/albums/telugu" className={`py-2 block hover:underline ${activeLink === 'Top Telugu Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Telugu Albums')}>Top Telugu Albums</Link>
+                                    <Link to="/albums/tamil" className={`py-2 block hover:underline ${activeLink === 'Top Tamil Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Tamil Albums')}>Top Tamil Albums</Link>
+                                    <Link to="/albums/bhojpuri" className={`py-2 block hover:underline ${activeLink === 'Top Bhojpuri Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Bhojpuri Albums')}>Top Bhojpuri Albums</Link>
+                                </div>
                             </div>
-                        </div>
                         )}
                     </div>
                 </div>
@@ -154,7 +154,7 @@ function Header() {
                 </div>
 
                 <div className={`hover:underline underline-offset-[6px] ${activeLink !== 'Podcast' ? 'text-slate-400' : 'text-white'}`}>
-                    <div  title="Podcast" onClick={notify}>Podcast</div>
+                    <div title="Podcast" onClick={notify}>Podcast</div>
                 </div>
             </div>
 
@@ -191,20 +191,20 @@ function Header() {
                             </svg>
                         </span>
                     </button>
-                    {isAlbumOpen && (   
+                    {isAlbumOpen && (
                         <div className="absolute top-full w-48 h-auto mt-2 p-4 rounded-xl border-none border-[#575757] shadow-inner bg-[#212121] shadow-[#2A2A2A] z-10 left-1/2 transform -translate-x-1/2">
-                        <div className='bg-transparent items-center justify-center'>
-                            <Link to="/albums/hindi" className={`py-2 block ${activeLink === 'Top Hindi Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Hindi Albums')}>Top Hindi Albums</Link>
-                            <Link to="/albums/english" className={`py-2 block ${activeLink === 'Top English Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top English Albums')}>Top English Albums</Link>
-                            <Link to="/albums/telugu" className={`py-2 block ${activeLink === 'Top Telugu Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Telugu Albums')}>Top Telugu Albums</Link>
-                            <Link to="/albums/tamil" className={`py-2 block ${activeLink === 'Top Tamil Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Tamil Albums')}>Top Tamil Albums</Link>
-                            <Link to="/albums/bhojpuri" className={`py-2 block ${activeLink === 'Top Bhojpuri Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Bhojpuri Albums')}>Top Bhojpuri Albums</Link>
+                            <div className='bg-transparent items-center justify-center'>
+                                <Link to="/albums/hindi" className={`py-2 block ${activeLink === 'Top Hindi Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Hindi Albums')}>Top Hindi Albums</Link>
+                                <Link to="/albums/english" className={`py-2 block ${activeLink === 'Top English Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top English Albums')}>Top English Albums</Link>
+                                <Link to="/albums/telugu" className={`py-2 block ${activeLink === 'Top Telugu Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Telugu Albums')}>Top Telugu Albums</Link>
+                                <Link to="/albums/tamil" className={`py-2 block ${activeLink === 'Top Tamil Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Tamil Albums')}>Top Tamil Albums</Link>
+                                <Link to="/albums/bhojpuri" className={`py-2 block ${activeLink === 'Top Bhojpuri Albums' ? 'text-white' : 'text-slate-300'}`} onClick={() => handleLinkClick('Top Bhojpuri Albums')}>Top Bhojpuri Albums</Link>
+                            </div>
                         </div>
-                    </div>
                     )}
                 </div>
                 <Link to="/artist" className={`hover:underline underline-offset-[6px] ${activeLink === 'Top Artists' ? 'text-white' : 'text-slate-400'}`} onClick={() => handleLinkClick('Top Artists')}>Top Artists</Link>
-                <div  className={`hover:underline underline-offset-[6px] ${activeLink === 'Podcast' ? 'text-white' : 'text-slate-400'}`} onClick={notify}>Podcast</div>
+                <div className={`hover:underline underline-offset-[6px] ${activeLink === 'Podcast' ? 'text-white' : 'text-slate-400'}`} onClick={notify}>Podcast</div>
             </div>
         </header>
     );

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
@@ -7,6 +8,7 @@ export const UserProvider = ({ children }) => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(localStorage.getItem('isUserLoggedIn') === 'true');
   const [currentSong, setCurrentSong] = useState(null);
   const [searchData, setSearchData] = useState([]);
+  // const navigate= useNavigate();
 
   useEffect(() => {
     setUserName(localStorage.getItem('userName') || 'Guest');
@@ -27,6 +29,8 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem('userName', 'Guest');
     localStorage.setItem('isUserLoggedIn', 'false');
     localStorage.removeItem('token');
+    // navigate('/')
+    window.location.reload();
   };
 
   const value = {

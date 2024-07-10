@@ -21,13 +21,15 @@ const TrendingNow = () => {
 
   const fetchFavorites = useCallback(async () => {
     try {
-      const response = await axios.get('https://academics.newtonschool.co/api/v1/music/favorites', {
-        headers: {
-          projectID: PROJECT_ID,
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setWatchList(response.data.data.songs.map(fav => fav._id));
+      if (token) {
+        const response = await axios.get('https://academics.newtonschool.co/api/v1/music/favorites', {
+          headers: {
+            projectID: PROJECT_ID,
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setWatchList(response.data.data.songs.map(fav => fav._id));
+      }
     } catch (error) {
       console.error('Error fetching favorites:', error);
       setError(error);
@@ -45,24 +47,29 @@ const TrendingNow = () => {
         },
       });
       setData(response.data.data);
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
       setError(error);
+    } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
     fetchData();
-    fetchFavorites();
-  }, [fetchData, fetchFavorites]);
+    if (token) {
+      fetchFavorites();
+    }
+  }, [fetchData, fetchFavorites, token]);
 
   useEffect(() => {
-    fetchFavorites();
-  }, [currentSong, fetchFavorites]);
+    if (token) {
+      fetchFavorites();
+    }
+  }, [currentSong, fetchFavorites, token]);
 
   const handleFavoriteToggle = async (songId) => {
+    if(token){
     const isFavorite = watchList.includes(songId);
     const url = `https://academics.newtonschool.co/api/v1/music/favorites/${isFavorite ? 'unlike' : 'like'}`;
     const action = isFavorite ? 'removed from' : 'added to';
@@ -77,7 +84,7 @@ const TrendingNow = () => {
 
       if (response.status === 200) {
         setWatchList(prevWatchList => isFavorite ? prevWatchList.filter(id => id !== songId) : [...prevWatchList, songId]);
-        toast.success(`Music ${action} favorite`,{autoClose:1000});
+        toast.success(`Music ${action} favorite`, { autoClose: 1000 });
       } else {
         toast.error(`Failed to ${action} favorite`);
       }
@@ -85,7 +92,10 @@ const TrendingNow = () => {
       console.error('Error updating favorite:', error);
       toast.error('Error updating favorite');
     }
-  };
+  }else{
+    toast("Please Login First"),{autoClose:1000};
+  }
+}
 
   const handleFollowToggle = () => {
     setIsFollowing(prevState => !prevState);

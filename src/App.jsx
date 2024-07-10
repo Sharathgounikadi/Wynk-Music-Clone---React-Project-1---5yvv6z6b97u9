@@ -41,10 +41,10 @@ const App = () => {
         <Route path="/songs/:category" element={<SongCard />} />
         <Route path="/mymusic" element={<ProtectedRoute component={MyMusic} />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/selectlanguage" element={<UnderMaintenance />} />  
+        {/* <Route path="/selectlanguage" element={<UnderMaintenance />} />  
         <Route path="/selectsound" element={<UnderMaintenance />} /> 
         <Route path="/podcast" element={<UnderMaintenance />} />
-        <Route path='/Maintenance' element={<UnderMaintenance/>}/>
+        <Route path='/Maintenance' element={<UnderMaintenance/>}/> */}
       </Routes>
       <Footer />
     </Router>

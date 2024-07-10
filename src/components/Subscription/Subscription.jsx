@@ -3,8 +3,6 @@ import { useUser } from '../../utils/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { LuCrown, LuDot } from "react-icons/lu";
 import { ToastContainer, toast } from 'react-toastify';
-import Navbar from '../Navbar/Navbar';
-import { IoIosArrowBack } from 'react-icons/io'; // Importing back arrow icon
 
 const Subscription = () => {
     const { isUserLoggedIn } = useUser();
@@ -17,7 +15,7 @@ const Subscription = () => {
     }, [isUserLoggedIn])
 
     const underDevelopment = () => {
-        toast("Feature under Development");
+        toast("Feature under Development",{autoClose:1000});
     }
 
     const goToHomePage = () => {
@@ -26,8 +24,7 @@ const Subscription = () => {
 
     return (
         <div>
-            <ToastContainer/>
-            {/* <Navbar/> */}
+            {/* <ToastContainer/> */}
             <div className="w-full h-[230px] bg-[#1f272b] box-border flex relative justify-center" style={{ clipPath: 'ellipse(100% 75% at 50% 15%)' }}>
                 <img className="w-[14%] -mt-32 " alt="logo" src="https://pay.wynk.in/static/media/Wynklogo-white.97aea089.svg" />
             </div>
@@ -108,7 +105,7 @@ const Subscription = () => {
                     </div>
                 </div>
             </div>
-            <div className='mx-64 my-5'>
+            <div className='mx-72 my-5'>
                 <span className='flex'>
                     <LuDot className='h-5 text-slate-50' />
                     <p className="text-gray-400">All amounts are inclusive of 18% GST.</p>
@@ -118,7 +115,7 @@ const Subscription = () => {
                     <p className="text-gray-400 ">By clicking on Continue button, you agree to Wynk's Terms of service and Privacy policy.</p>
                 </span>
             </div>
-            <div className="bg-gray-800 rounded-lg mx-64 flex-row p-2 items-center max-w-5xl">
+            <div className="bg-gray-800 rounded-lg mx-72 flex-row p-2 items-center max-w-5xl">
                 <div className='flex flex-row justify-between'>
                     <div className='flex flex-col'>
                         <h2 className="text-white text-sm font-bold">Amount to be paid</h2>
